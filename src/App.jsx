@@ -3,8 +3,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-function App() {
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
+function App() {
   const [countryCode, setCountryCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -18,10 +29,9 @@ function App() {
 
   function submitHandler() {
     const url = `https://wa.me/${countryCode}${phoneNumber}`;
-    console.log("Anand: url", url )
+    console.log("Anand: url", url);
     window.open(url, "_blank");
   }
-
 
   return (
     <>
@@ -54,7 +64,31 @@ function App() {
             />
           </div>
           <div className="space-y-2 text-center">
-            <Button onClick={submitHandler} className="mx-auto">Start chat</Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button className="mx-auto">Start chat</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Please verify the country code and number are correct
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Clicking continue will open a new tab with the WhatsApp
+                    chat.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>I always mess up!!!</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={submitHandler}
+                  >
+                    Yes, I&apos;m not an idiot!
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </div>
