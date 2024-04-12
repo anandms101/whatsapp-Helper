@@ -35,6 +35,7 @@ import { ChevronsUpDown } from "lucide-react";
 
 import countryCodes from "../src/data/CountryCodes.json";
 import PropTypes from "prop-types";
+import { ModeToggle } from "./components/mode-toggle";
 
 // alert dialog component
 const AlertDialogComponent = (props) => {
@@ -236,6 +237,7 @@ function App() {
 
   return (
     <>
+    <ModeToggle />
       <FormComponent
         countryCodeChangeHandler={countryCodeChangeHandler}
         phoneNumberChangeHandler={phoneNumberChangeHandler}
