@@ -147,7 +147,6 @@ const CountrySearchComponent = ({
   countrySelected,
   setCountrySelected,
   setCountryDialCode,
-  countryDialCode,
 }) => {
   return (
     <>
