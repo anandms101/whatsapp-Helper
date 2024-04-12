@@ -38,10 +38,11 @@ import PropTypes from "prop-types";
 
 // alert dialog component
 const AlertDialogComponent = (props) => {
+  const fieldsValidation = props.validPhone && props.countrySelected;
   return (
     <AlertDialog>
-      <AlertDialogTrigger disabled={!props.validPhone}>
-        <Button disabled={!props.validPhone} className="mx-auto">Start chat</Button>
+      <AlertDialogTrigger disabled={!fieldsValidation}>
+        <Button disabled={!fieldsValidation} className="mx-auto">Start chat</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -68,6 +69,7 @@ AlertDialogComponent.propTypes = {
   submitHandler: PropTypes.func.isRequired,
   countrySelected: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
+  validPhone: PropTypes.bool.isRequired,
 };
 
 // form component
