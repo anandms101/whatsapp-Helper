@@ -40,8 +40,8 @@ import PropTypes from "prop-types";
 const AlertDialogComponent = (props) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Button className="mx-auto">Start chat</Button>
+      <AlertDialogTrigger disabled={!props.validPhone}>
+        <Button disabled={!props.validPhone} className="mx-auto">Start chat</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -100,15 +100,22 @@ const FormComponent = (props) => {
             <Input
               className="max-w-xs mx-auto"
               id="phone-number"
-              placeholder="Enter the phone number"
+              placeholder="Phone number without country code"
               onChange={(e) => props.phoneNumberChangeHandler(e.target.value)}
+              required
             />
+            {!props.validPhone && (
+              <span style={{ color: "red" }}>
+                Please enter a valid phone number
+              </span>
+            )}
           </div>
           <div className="space-y-2 text-center">
             <AlertDialogComponent
               countrySelected={props.countrySelected}
               phoneNumber={props.phoneNumber}
               submitHandler={props.submitHandler}
+              validPhone = {props.validPhone}
             />
           </div>
         </div>
@@ -128,6 +135,7 @@ FormComponent.propTypes = {
   setCountryDialCode: PropTypes.func.isRequired,
   countryDialCode: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
+  validPhone: PropTypes.bool.isRequired,
 };
 
 // country search component
@@ -202,12 +210,21 @@ function App() {
   const [open, setOpen] = useState(false);
   const [countrySelected, setCountrySelected] = useState("");
 
+  const [validPhone, setValidPhone] = useState(false);
+
   function countryCodeChangeHandler(value) {
     setCountryDialCode(value.trim().replace("+", ""));
   }
 
   function phoneNumberChangeHandler(value) {
     setPhoneNumber(value);
+    setValidPhone(validatePhoneNumber(value));
+  }
+
+  function validatePhoneNumber(phone) {
+    const regex =
+      /^(?:(?:\+|00)(\d{1,3})[\s-]?)?(?:\d{3,})[\s-]?\d{3,}[\s-]?\d{2,}[\s-]?\d{2,}$/;
+    return regex.test(phone);
   }
 
   function submitHandler() {
@@ -229,6 +246,7 @@ function App() {
         setCountryDialCode={setCountryDialCode}
         countryDialCode={countryDialCode}
         phoneNumber={phoneNumber}
+        validPhone={validPhone}
       />
     </>
   );
