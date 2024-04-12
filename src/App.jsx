@@ -15,6 +15,27 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { CommandList } from "cmdk";
+
+import { ChevronsUpDown } from "lucide-react";
+
+import countryCodes from "../src/data/CountryCodes.json";
+import PropTypes from "prop-types";
+
 // alert dialog component
 const AlertDialogComponent = (props) => {
   return (
@@ -28,6 +49,7 @@ const AlertDialogComponent = (props) => {
             Please verify the country code and number are correct
           </AlertDialogTitle>
           <AlertDialogDescription>
+            {props.countrySelected} {props.phoneNumber}
             Clicking continue will open a new tab with the WhatsApp chat.
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -40,6 +62,12 @@ const AlertDialogComponent = (props) => {
       </AlertDialogContent>
     </AlertDialog>
   );
+};
+
+AlertDialogComponent.propTypes = {
+  submitHandler: PropTypes.func.isRequired,
+  countrySelected: PropTypes.string.isRequired,
+  phoneNumber: PropTypes.string.isRequired,
 };
 
 // form component
@@ -57,12 +85,14 @@ const FormComponent = (props) => {
             </p>
           </div>
           <div className="space-y-2 text-center">
-            <Label htmlFor="country-code">Country code</Label>
-            <Input
-              className="max-w-xs mx-auto"
-              id="country-code"
-              placeholder="Enter the country code"
-              onChange={(e) => props.countryCodeChangeHandler(e.target.value)}
+            <Label htmlFor="country-code">Country</Label>
+            <CountrySearchComponent
+              open={props.open}
+              setOpen={props.setOpen}
+              countrySelected={props.countrySelected}
+              setCountrySelected={props.setCountrySelected}
+              setCountryDialCode={props.setCountryDialCode}
+              countryDialCode={props.countryDialCode}
             />
           </div>
           <div className="space-y-2 text-center">
@@ -75,7 +105,11 @@ const FormComponent = (props) => {
             />
           </div>
           <div className="space-y-2 text-center">
-            <AlertDialogComponent submitHandler={props.submitHandler} />
+            <AlertDialogComponent
+              countrySelected={props.countrySelected}
+              phoneNumber={props.phoneNumber}
+              submitHandler={props.submitHandler}
+            />
           </div>
         </div>
       </div>
@@ -83,12 +117,93 @@ const FormComponent = (props) => {
   );
 };
 
+FormComponent.propTypes = {
+  countryCodeChangeHandler: PropTypes.func.isRequired,
+  phoneNumberChangeHandler: PropTypes.func.isRequired,
+  submitHandler: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  countrySelected: PropTypes.string.isRequired,
+  setCountrySelected: PropTypes.func.isRequired,
+  setCountryDialCode: PropTypes.func.isRequired,
+  countryDialCode: PropTypes.string.isRequired,
+  phoneNumber: PropTypes.string.isRequired,
+};
+
+// country search component
+const CountrySearchComponent = ({
+  open,
+  setOpen,
+  countrySelected,
+  setCountrySelected,
+  setCountryDialCode,
+  countryDialCode,
+}) => {
+  return (
+    <>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[200px] justify-between"
+          >
+            {countrySelected
+              ? countryCodes.find((country) => country.name === countrySelected)
+                  ?.name
+              : "Select country..."}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[200px] p-0">
+          <Command>
+            <CommandInput placeholder="Search country..." />
+            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandGroup>
+              {countryCodes.map((country) => (
+                <CommandList key={country.code}>
+                  <CommandItem
+                    key={country.code}
+                    value={country.name}
+                    onSelect={(currentValue) => {
+                      setCountrySelected(
+                        currentValue === countrySelected ? "" : currentValue
+                      );
+                      setOpen(false);
+                      setCountryDialCode(country.dial_code);
+                    }}
+                  >
+                    {`${country.dial_code} - ${country.name} (${country.code})`}
+                  </CommandItem>
+                </CommandList>
+              ))}
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
+  );
+};
+
+CountrySearchComponent.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  countrySelected: PropTypes.string.isRequired,
+  setCountrySelected: PropTypes.func.isRequired,
+  setCountryDialCode: PropTypes.func.isRequired,
+  countryDialCode: PropTypes.string.isRequired,
+};
+
 function App() {
-  const [countryCode, setCountryCode] = useState("");
+  const [countryDialCode, setCountryDialCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const [open, setOpen] = useState(false);
+  const [countrySelected, setCountrySelected] = useState("");
+
   function countryCodeChangeHandler(value) {
-    setCountryCode(value.trim().replace("+", ""));
+    setCountryDialCode(value.trim().replace("+", ""));
   }
 
   function phoneNumberChangeHandler(value) {
@@ -96,7 +211,7 @@ function App() {
   }
 
   function submitHandler() {
-    const url = `https://wa.me/${countryCode}${phoneNumber}`;
+    const url = `https://wa.me/${countryDialCode}${phoneNumber}`;
     console.log("Anand: url", url);
     window.open(url, "_blank");
   }
@@ -107,6 +222,13 @@ function App() {
         countryCodeChangeHandler={countryCodeChangeHandler}
         phoneNumberChangeHandler={phoneNumberChangeHandler}
         submitHandler={submitHandler}
+        open={open}
+        setOpen={setOpen}
+        countrySelected={countrySelected}
+        setCountrySelected={setCountrySelected}
+        setCountryDialCode={setCountryDialCode}
+        countryDialCode={countryDialCode}
+        phoneNumber={phoneNumber}
       />
     </>
   );
