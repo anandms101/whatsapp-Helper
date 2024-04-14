@@ -208,11 +208,11 @@ CountrySearchComponent.propTypes = {
 };
 
 function App() {
-  const [countryDialCode, setCountryDialCode] = useState("");
+  const [countryDialCode, setCountryDialCode] = useState("+91");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const [open, setOpen] = useState(false);
-  const [countrySelected, setCountrySelected] = useState("");
+  const [countrySelected, setCountrySelected] = useState("India");
 
   const [validPhone, setValidPhone] = useState(false);
 
