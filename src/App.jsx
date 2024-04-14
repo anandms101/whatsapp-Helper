@@ -1,4 +1,3 @@
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -35,7 +34,6 @@ import { ChevronsUpDown } from "lucide-react";
 
 import countryCodes from "../src/data/CountryCodes.json";
 import PropTypes from "prop-types";
-import { ModeToggle } from "./components/mode-toggle";
 import NavBar from "./layouts/Navbar";
 
 // alert dialog component
