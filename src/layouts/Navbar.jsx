@@ -13,7 +13,7 @@ export default function NavBar() {
   return (
     <NavigationMenu className="flex flex-grow flex-row max-w-full justify-between px-52 ">
       <NavigationMenuList>
-        <NavigationMenuItem className="flex text-lg font-appName font-semibold">QuickWhisper <WindIcon /> </NavigationMenuItem>
+        <NavigationMenuItem className="flex text-lg font-appName font-semibold">quickWhisper <WindIcon /> </NavigationMenuItem>
       </NavigationMenuList>
       <NavigationMenuList>
         <NavigationMenuItem className="flex p-1 pr-4">
