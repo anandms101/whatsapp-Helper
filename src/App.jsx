@@ -51,10 +51,13 @@ const AlertDialogComponent = (props) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Please verify the country code and number are correct
+            Are the details correct???
           </AlertDialogTitle>
           <AlertDialogDescription>
+            <span className="font-bold antialiased text-m">
             {props.countrySelected} {props.phoneNumber}
+            </span>
+            <br />
             Clicking continue will open a new tab with the WhatsApp chat.
           </AlertDialogDescription>
         </AlertDialogHeader>
