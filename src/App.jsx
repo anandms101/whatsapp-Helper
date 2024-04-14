@@ -36,6 +36,7 @@ import { ChevronsUpDown } from "lucide-react";
 import countryCodes from "../src/data/CountryCodes.json";
 import PropTypes from "prop-types";
 import { ModeToggle } from "./components/mode-toggle";
+import NavBar from "./layouts/Navbar";
 
 // alert dialog component
 const AlertDialogComponent = (props) => {
@@ -43,7 +44,9 @@ const AlertDialogComponent = (props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger disabled={!fieldsValidation}>
-        <Button disabled={!fieldsValidation} className="mx-auto">Start chat</Button>
+        <Button disabled={!fieldsValidation} className="mx-auto">
+          Start chat
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -80,11 +83,11 @@ const FormComponent = (props) => {
       <div className="px-4 py-12 space-y-8 md:py-24 md:space-y-12 flex items-center justify-center">
         <div className="container space-y-4">
           <div className="space-y-2 text-center">
-            <h1 className="text-3xl font-bold">
-              Send WhatsApp Message without Saving Number
+            <h1 className="text-3xl font-bold font-heading antialiased capitalize">
+              Saves you the trouble of saving a number
             </h1>
             <p className="text-gray-500 dark:text-gray-400">
-              Enter the country code and phone number below to start a chat.
+              Enter the country code and phone number below to start a Whatspp chat.
             </p>
           </div>
           <div className="space-y-2 text-center">
@@ -118,7 +121,7 @@ const FormComponent = (props) => {
               countrySelected={props.countrySelected}
               phoneNumber={props.phoneNumber}
               submitHandler={props.submitHandler}
-              validPhone = {props.validPhone}
+              validPhone={props.validPhone}
             />
           </div>
         </div>
@@ -237,7 +240,8 @@ function App() {
 
   return (
     <>
-    <ModeToggle />
+      {/* <ModeToggle /> */}
+      <NavBar />
       <FormComponent
         countryCodeChangeHandler={countryCodeChangeHandler}
         phoneNumberChangeHandler={phoneNumberChangeHandler}
