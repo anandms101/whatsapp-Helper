@@ -158,7 +158,7 @@ const CountrySearchComponent = ({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-80 justify-between"
           >
             {countrySelected
               ? countryCodes.find((country) => country.name === countrySelected)
@@ -167,7 +167,7 @@ const CountrySearchComponent = ({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-80 p-0">
           <Command>
             <CommandInput placeholder="Search country..." />
             <CommandEmpty>No country found.</CommandEmpty>
