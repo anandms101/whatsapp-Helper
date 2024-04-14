@@ -91,7 +91,6 @@ const FormComponent = (props) => {
             </p>
           </div>
           <div className="space-y-2 text-center">
-            <Label htmlFor="country-code">Country</Label>
             <CountrySearchComponent
               open={props.open}
               setOpen={props.setOpen}
@@ -102,7 +101,6 @@ const FormComponent = (props) => {
             />
           </div>
           <div className="space-y-2 text-center">
-            <Label htmlFor="phone-number">Phone number</Label>
             <Input
               className="max-w-xs mx-auto"
               id="phone-number"
@@ -111,12 +109,12 @@ const FormComponent = (props) => {
               required
             />
             {!props.validPhone && (
-              <span style={{ color: "red" }}>
+              <span  className="text-s text-red-600">
                 Please enter a valid phone number
               </span>
             )}
           </div>
-          <div className="space-y-2 text-center">
+          <div className="space-y-2 text-center ">
             <AlertDialogComponent
               countrySelected={props.countrySelected}
               phoneNumber={props.phoneNumber}
