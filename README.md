@@ -1,59 +1,3 @@
-                         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 <br/>
 <div align="center">
 
@@ -70,8 +14,8 @@ Send WhatsApp messages instantly without saving numbers. quickWhisper is a simpl
 </div>
 
  ## About The Project
-
-[![Product Screenshot][Screenshot]](https://drive.google.com/file/d/10f9gYVr8nmT435N1vTxWGK5nXTUXDp1v/view?usp=drive_link/1920x1080)
+ 
+<img src="https://github.com/anandms101/whatsapp-Helper/blob/main/src/screenshots/homePage.png" alt="project-screenshot" width="1920" height="500">
  ### Built With
 
 - [Next](https://nextjs.org)
